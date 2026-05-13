@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "penalties": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "recommendation": {
+      "type": "string"
+    },
+    "scores": {
+      "type": "object"
+    },
+    "skill_id": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "skill_id",
+    "scores",
+    "penalties",
+    "recommendation"
+  ],
+  "title": "Algorithm Quality Review",
+  "type": "object"
+}

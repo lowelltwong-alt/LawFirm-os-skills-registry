@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "skills": [
+    {
+      "description": "Use when reviewing a newly discovered or imported Agent Skill for malicious code, prompt injection, secret exfiltration, supply-chain risk, risky tool permissions, or hidden backdoors.",
+      "may_execute_scripts": false,
+      "requires_human_review": true,
+      "skill_id": "malicious-skill-review",
+      "source_path": "skills/approved/malicious-skill-review",
+      "status": "approved_local",
+      "version": "0.1.0"
+    },
+    {
+      "description": "Use when reviewing a skill, algorithm, workflow, agent plan, repo change, or proposed automation for elegant simple design on the far side of complexity.",
+      "may_execute_scripts": false,
+      "requires_human_review": true,
+      "skill_id": "elegant-design-review",
+      "source_path": "skills/approved/elegant-design-review",
+      "status": "approved_local",
+      "version": "0.1.0"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Threat Rulepack",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"type": "string"},
+    "version": {"type": "string"},
+    "name": {"type": "string"},
+    "description": {"type": "string"},
+    "source": {"type": "string"},
+    "rules": {
+      "type": "array",
+      "maxItems": 250,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["rule_id", "scope", "pattern", "severity", "category", "description", "recommendation"],
+        "properties": {
+          "rule_id": {"type": "string"},
+          "scope": {"enum": ["text", "code", "path", "all"]},
+          "pattern": {"type": "string", "maxLength": 320},
+          "severity": {"enum": ["info", "low", "medium", "high", "critical"]},
+          "category": {"type": "string"},
+          "description": {"type": "string", "maxLength": 1200},
+          "recommendation": {"type": "string"}
+        }
+      }
+    }
+  },
+  "required": ["version", "rules"],
+  "not": {
+    "anyOf": [
+      {"required": ["disabled_categories"]},
+      {"required": ["disable_scanner"]},
+      {"required": ["allowlist"]},
+      {"required": ["severity_overrides"]},
+      {"required": ["approval_policy"]},
+      {"required": ["auto_approve"]}
+    ]
+  }
+}

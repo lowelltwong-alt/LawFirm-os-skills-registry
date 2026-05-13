@@ -1,0 +1,24 @@
+{
+  "rules": [
+    {
+      "category": "prompt_injection",
+      "description": "Fake policy/debug override attempt.",
+      "pattern": "(?i)(policy override|emergency override|debug mode).{0,80}(ignore|bypass|disable).{0,80}(scanner|guardrail|approval)",
+      "recommendation": "Reject.",
+      "rule_id": "prompt.fake_policy_override",
+      "scope": "text",
+      "severity": "critical"
+    },
+    {
+      "category": "data_exfiltration",
+      "description": "Potential clipboard exfiltration.",
+      "pattern": "(?i)(clipboard|pbpaste|xclip|Get-Clipboard).{0,100}(post|send|upload|http)",
+      "recommendation": "Quarantine.",
+      "rule_id": "code.clipboard_exfiltration",
+      "scope": "code",
+      "severity": "high"
+    }
+  ],
+  "schema_version": "1.0",
+  "version": "example-2026-05"
+}

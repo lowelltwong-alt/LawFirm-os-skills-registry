@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Malicious Skill Scan",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"type": "string"},
+    "generated_at": {"type": "string"},
+    "skill_dir": {"type": "string"},
+    "risk_score": {"type": "integer", "minimum": 0, "maximum": 100},
+    "risk_level": {"enum": ["none", "low", "medium", "high", "critical"]},
+    "static_risk_score": {"type": "integer", "minimum": 0, "maximum": 100},
+    "semantic_risk_score": {"type": "integer", "minimum": 0, "maximum": 100},
+    "semantic_risk_level": {"enum": ["none", "low", "medium", "high", "critical"]},
+    "recommendation": {"enum": ["safe_for_eval", "manual_review", "quarantine", "reject"]},
+    "finding_count": {"type": "integer", "minimum": 0},
+    "static_findings": {"type": "array", "items": {"$ref": "#/$defs/finding"}},
+    "semantic_intent": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["risk_score", "risk_level", "recommendation", "findings"],
+      "properties": {
+        "risk_score": {"type": "integer", "minimum": 0, "maximum": 100},
+        "risk_level": {"enum": ["none", "low", "medium", "high", "critical"]},
+        "recommendation": {"type": "string"},
+        "findings": {"type": "array", "items": {"$ref": "#/$defs/semantic_finding"}}
+      }
+    },
+    "findings": {"type": "array"},
+    "file_manifest": {"type": "array"}
+  },
+  "required": [
+    "skill_dir",
+    "risk_score",
+    "risk_level",
+    "static_risk_score",
+    "semantic_risk_score",
+    "semantic_risk_level",
+    "recommendation",
+    "finding_count",
+    "static_findings",
+    "semantic_intent",
+    "findings",
+    "file_manifest"
+  ],
+  "$defs": {
+    "finding": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["rule_id", "severity", "category", "file", "description", "recommendation"],
+      "properties": {
+        "rule_id": {"type": "string"},
+        "severity": {"enum": ["info", "low", "medium", "high", "critical"]},
+        "category": {"type": "string"},
+        "file": {"type": "string"},
+        "line": {"type": ["integer", "null"]},
+        "match": {"type": ["string", "null"]},
+        "description": {"type": "string"},
+        "recommendation": {"type": "string"}
+      }
+    },
+    "semantic_finding": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["severity", "category", "file", "evidence", "description", "recommendation"],
+      "properties": {
+        "severity": {"enum": ["info", "low", "medium", "high", "critical"]},
+        "category": {"type": "string"},
+        "file": {"type": "string"},
+        "line": {"type": ["integer", "null"]},
+        "evidence": {"type": "string"},
+        "description": {"type": "string"},
+        "recommendation": {"type": "string"}
+      }
+    }
+  }
+}

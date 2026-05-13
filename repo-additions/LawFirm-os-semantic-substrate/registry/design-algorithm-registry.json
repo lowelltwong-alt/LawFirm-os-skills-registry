@@ -1,0 +1,12 @@
+{
+  "primary_algorithm": "musk_style_design_algorithm",
+  "rule": "Never automate before deleting and simplifying.",
+  "schema_version": "1.0",
+  "steps": [
+    "question_requirements",
+    "delete",
+    "simplify_optimize",
+    "accelerate",
+    "automate_last"
+  ]
+}

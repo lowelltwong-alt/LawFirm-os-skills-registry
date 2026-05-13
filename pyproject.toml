@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "LawFirm-os-skills-registry"
+version = "0.2.1"
+description = "Local-first skill supply chain for LawFirm OS: discover, quarantine, scan, grade, approve, and draft Agent Skills."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0,<10"]
+
+[project.scripts]
+lawfirm-os-skills = "lawfirm_os_skills_registry.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["lawfirm_os_skills_registry*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

@@ -1,0 +1,16 @@
+{
+  "approval_minima": {
+    "algorithmic_elegance": 55,
+    "overall": 75,
+    "safety": 80
+  },
+  "schema_version": "1.0",
+  "weights": {
+    "algorithmic_elegance": 0.13,
+    "lawfirm_fit": 0.12,
+    "output_contract": 0.18,
+    "portability": 0.12,
+    "safety": 0.28,
+    "trigger_quality": 0.17
+  }
+}

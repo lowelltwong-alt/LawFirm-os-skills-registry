@@ -1,0 +1,6 @@
+{
+  "active_rulepack": "security/rulepacks/active/custom_rules.json",
+  "auto_promote": false,
+  "schema_version": "1.0",
+  "update_policy": "candidate_then_human_approval"
+}
