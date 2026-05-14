@@ -1,0 +1,19 @@
+{
+  "schema_version": "1.0",
+  "status": "draft_candidate_only",
+  "purpose": "Authoritative union index for every SKILL.md under skills/draft/ for AI front door integrity checks.",
+  "skills": [
+    {"skill_id": "first-party-skill-scout", "source_path": "skills/draft/first-party-skill-scout", "proposal_pack": "first_party_skill_reactor"},
+    {"skill_id": "skill-evaluation-harness", "source_path": "skills/draft/skill-evaluation-harness", "proposal_pack": "first_party_skill_reactor"},
+    {"skill_id": "legal-corpus-ingestion-preflight", "source_path": "skills/draft/legal-corpus-ingestion-preflight", "proposal_pack": "legal_knowledge_runtime_seed"},
+    {"skill_id": "legal-document-structure-builder", "source_path": "skills/draft/legal-document-structure-builder", "proposal_pack": "legal_knowledge_runtime_seed"},
+    {"skill_id": "legal-retrieval-planner", "source_path": "skills/draft/legal-retrieval-planner", "proposal_pack": "legal_knowledge_runtime_seed"},
+    {"skill_id": "legal-context-bundle-assembler", "source_path": "skills/draft/legal-context-bundle-assembler", "proposal_pack": "legal_knowledge_runtime_seed"},
+    {"skill_id": "privilege-aware-retrieval-review", "source_path": "skills/draft/privilege-aware-retrieval-review", "proposal_pack": "legal_knowledge_runtime_seed"},
+    {"skill_id": "legal-retrieval-quality-eval", "source_path": "skills/draft/legal-retrieval-quality-eval", "proposal_pack": "legal_knowledge_runtime_seed"},
+    {"skill_id": "legal-document-integrity-verifier", "source_path": "skills/draft/legal-document-integrity-verifier", "proposal_pack": "legal_knowledge_research_delta"},
+    {"skill_id": "legal-adversarial-eval-builder", "source_path": "skills/draft/legal-adversarial-eval-builder", "proposal_pack": "legal_knowledge_research_delta"},
+    {"skill_id": "legal-prompt-injection-boundary-review", "source_path": "skills/draft/legal-prompt-injection-boundary-review", "proposal_pack": "legal_knowledge_research_delta"},
+    {"skill_id": "legal-subgoal-claim-verifier", "source_path": "skills/draft/legal-subgoal-claim-verifier", "proposal_pack": "legal_knowledge_research_delta"}
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "registry_id": "proposed_research_delta_skills.v1",
+  "status": "draft",
+  "skills": [
+    {
+      "skill_id": "legal-document-integrity-verifier",
+      "status": "draft",
+      "risk": "medium",
+      "approval_required": true
+    },
+    {
+      "skill_id": "legal-adversarial-eval-builder",
+      "status": "draft",
+      "risk": "medium",
+      "approval_required": true
+    },
+    {
+      "skill_id": "legal-prompt-injection-boundary-review",
+      "status": "draft",
+      "risk": "high",
+      "approval_required": true
+    },
+    {
+      "skill_id": "legal-subgoal-claim-verifier",
+      "status": "draft",
+      "risk": "medium",
+      "approval_required": true
+    }
+  ]
+}
