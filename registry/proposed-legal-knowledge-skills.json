@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "status": "draft_candidate_only",
+  "skills": [
+    {
+      "skill_id": "legal-corpus-ingestion-preflight",
+      "source_path": "skills/draft/legal-corpus-ingestion-preflight",
+      "risk_tier": "high",
+      "requires_human_review": true,
+      "may_execute_scripts": false,
+      "description": "Use when validating a legal document ingestion manifest before any legal corpus is parsed, indexed, searched, or connected to a runtime. Produces a manifest risk report, missing metadata list, access/privilege gate result, and ingestion recommendation."
+    },
+    {
+      "skill_id": "legal-document-structure-builder",
+      "source_path": "skills/draft/legal-document-structure-builder",
+      "risk_tier": "medium",
+      "requires_human_review": true,
+      "may_execute_scripts": false,
+      "description": "Use when designing or reviewing legal document structure extraction for contracts, filings, briefs, policies, discovery, schedules, tables, definitions, citations, and cross-references. Produces a document tree plan and span-ref coverage map."
+    },
+    {
+      "skill_id": "legal-retrieval-planner",
+      "source_path": "skills/draft/legal-retrieval-planner",
+      "risk_tier": "medium",
+      "requires_human_review": true,
+      "may_execute_scripts": false,
+      "description": "Use when choosing retrieval primitives for a legal task. Produces a retrieval plan that selects metadata, lexical, document-tree, vector, graph, or compiled-bundle retrieval according to the Legal Context Bundle contract."
+    },
+    {
+      "skill_id": "legal-context-bundle-assembler",
+      "source_path": "skills/draft/legal-context-bundle-assembler",
+      "risk_tier": "high",
+      "requires_human_review": true,
+      "may_execute_scripts": false,
+      "description": "Use when assembling a Legal Context Bundle for contract review, litigation research, discovery response, billing guideline checks, or matter intake. Produces a bundle with controlling spans, related spans, access decision, missing/uncertain items, and allowed use."
+    },
+    {
+      "skill_id": "privilege-aware-retrieval-review",
+      "source_path": "skills/draft/privilege-aware-retrieval-review",
+      "risk_tier": "critical",
+      "requires_human_review": true,
+      "may_execute_scripts": false,
+      "description": "Use when reviewing a retrieval workflow for cross-matter leakage, privilege risk, confidentiality boundary failures, access-policy gaps, retention issues, or forbidden raw payload movement. Produces a boundary finding report and fail-closed recommendation."
+    },
+    {
+      "skill_id": "legal-retrieval-quality-eval",
+      "source_path": "skills/draft/legal-retrieval-quality-eval",
+      "risk_tier": "medium",
+      "requires_human_review": true,
+      "may_execute_scripts": false,
+      "description": "Use when evaluating legal search quality, context bundle sufficiency, citation grounding, retrieval trace completeness, and missing-evidence defects. Produces quality scores, defect tags, and improvement proposals without mutating canon."
+    }
+  ],
+  "approval_note": "These skills are deliberately draft candidates. Run the existing malicious-skill-review and elegant-design-review processes before approving."
+}
