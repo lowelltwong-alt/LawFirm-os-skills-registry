@@ -11,6 +11,8 @@ from .governance.design_algorithm import write_algorithm_grade
 from .registry.store import approve_skill, list_approved, install_codex_skills
 from .gap_detection.detector import detect_skill_gaps, write_skill_gaps
 from .factory.drafter import draft_skill_from_gap_file
+from .factory.first_party_reactor import react_to_skill_gaps
+from .evaluation.fixture_harness import write_fixture_evaluation
 
 def pj(obj): print(json.dumps(obj, indent=2, sort_keys=True))
 
@@ -31,6 +33,8 @@ def parser():
     a=s.add_parser('install-codex-skills'); a.add_argument('--registry', default='registry/approved-skills.json'); a.add_argument('--target-repo', required=True); a.add_argument('--include-scripts', action='store_true'); a.add_argument('--approve-scripts', action='store_true')
     a=s.add_parser('detect-skill-gaps'); a.add_argument('--clusters', required=True); a.add_argument('--out', default='reports/skill_gap_candidates.jsonl'); a.add_argument('--min-support', type=int, default=3)
     a=s.add_parser('draft-skill'); a.add_argument('--gap-candidates', required=True); a.add_argument('--gap-id'); a.add_argument('--drafts-dir', default='skills/draft')
+    a=s.add_parser('react-skill-gap'); a.add_argument('--gap-candidates', required=True); a.add_argument('--drafts-dir', default='skills/draft'); a.add_argument('--reports-dir', default='reports'); a.add_argument('--evals-dir', default='evals/reports'); a.add_argument('--reference-jsonl'); a.add_argument('--max-gaps', type=int, default=3); a.add_argument('--max-refs-per-gap', type=int, default=5); a.add_argument('--min-support', type=int, default=3); a.add_argument('--allow-network', action='store_true'); a.add_argument('--dry-run', action='store_true')
+    a=s.add_parser('evaluate-skill-fixtures'); a.add_argument('--skill', required=True); a.add_argument('--out', required=True)
     return p
 
 def main(argv=None):
@@ -49,4 +53,6 @@ def main(argv=None):
     if args.cmd=='install-codex-skills': pj(install_codex_skills(args.registry,args.target_repo,args.include_scripts,args.approve_scripts)); return 0
     if args.cmd=='detect-skill-gaps': rows=detect_skill_gaps(args.clusters,args.min_support); write_skill_gaps(rows,args.out); pj({'candidate_count':len(rows),'out':args.out}); return 0
     if args.cmd=='draft-skill': pj(draft_skill_from_gap_file(args.gap_candidates,args.gap_id,args.drafts_dir)); return 0
+    if args.cmd=='react-skill-gap': pj(react_to_skill_gaps(args.gap_candidates,drafts_dir=args.drafts_dir,reports_dir=args.reports_dir,evals_dir=args.evals_dir,reference_jsonl=args.reference_jsonl,max_gaps=args.max_gaps,max_refs_per_gap=args.max_refs_per_gap,min_support=args.min_support,allow_network=args.allow_network,dry_run=args.dry_run)); return 0
+    if args.cmd=='evaluate-skill-fixtures': r=write_fixture_evaluation(args.skill,args.out); pj({'out':args.out,'passed':r['passed'],'recommendation':r['recommendation'],'overall':r['scores']['overall']}); return 0
     return 1
