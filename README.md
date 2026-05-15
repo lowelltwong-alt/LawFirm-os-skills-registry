@@ -2,6 +2,8 @@
 
 Local-first skill supply chain for LawFirm OS.
 
+AI and agent bootstrap: start at `AI_WORK_START_HERE.md`, then open the canonical AI front door and Skill-Agent Control Plane in `../LawFirm-os-semantic-substrate` (`registry/ai-front-door-registry.json`, `registry/skill-agent-control-plane-registry.json`, `skill-agent-manifest.json`).
+
 The operating loop is intentionally simple:
 
 ```text

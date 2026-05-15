@@ -8,3 +8,15 @@ __pycache__/
 venv/
 dist/
 build/
+
+# Managed patch / SACP patch backups and noise
+*.skill-agent-control-backup
+*.managed-preservation-backup
+*.research-delta-backup
+*.bak
+*.bak.workflow_atlas
+*.backup
+*.orig
+.cursor/
+_patches/
+evals/reports/*.fixtures.json

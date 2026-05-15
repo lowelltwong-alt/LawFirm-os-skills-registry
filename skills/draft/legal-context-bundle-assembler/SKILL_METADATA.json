@@ -1,0 +1,41 @@
+{
+  "id": "legal-context-bundle-assembler",
+  "kind": "skill",
+  "name": "Legal context bundle assembler",
+  "owning_repo": "LawFirm-os-skills-registry",
+  "owning_plane": "skills_registry",
+  "address": "lawfirm-os.skill.legal-knowledge.legal-context-bundle-assembler.v1.draft",
+  "version": "1.0.0",
+  "lifecycle_state": "draft",
+  "risk_tier": "medium",
+  "capabilities": [
+    "context_bundle",
+    "evidence_refs"
+  ],
+  "inputs": [
+    "task_context",
+    "policy_context"
+  ],
+  "outputs": [
+    "skill_result",
+    "evidence_refs"
+  ],
+  "side_effect_class": "none",
+  "data_classes": [
+    "synthetic",
+    "metadata_only"
+  ],
+  "approval_required": false,
+  "quality_score_ref": "skill-quality-score://legal-context-bundle-assembler/latest",
+  "graph_node_ref": "skill-agent-graph://skill/legal-context-bundle-assembler",
+  "related_workflows": [
+    "legal_knowledge.contract_review_context_bundle.v1"
+  ],
+  "supersedes": [],
+  "superseded_by": null,
+  "combines_with": [],
+  "recommended_update_policy": "auto_propose",
+  "created_at": "2026-05-14T17:50:46.884250+00:00",
+  "updated_at": "2026-05-14T17:50:46.884282+00:00",
+  "notes": "Draft metadata. Promotion requires governance according to lifecycle policy."
+}

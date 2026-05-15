@@ -1,0 +1,18 @@
+{
+  "manifest_id": "lawfirm-os-skills-registry.skill-agent-manifest.v1",
+  "owning_repo": "LawFirm-os-skills-registry",
+  "owning_plane": "skills_registry",
+  "purpose": "Draft/candidate skill definitions and local skill metadata.",
+  "canonical_front_door": "../LawFirm-os-semantic-substrate/registry/ai-front-door-registry.json",
+  "canonical_skill_agent_control_plane": "../LawFirm-os-semantic-substrate/registry/skill-agent-control-plane-registry.json",
+  "canonical_repo_registry": "../LawFirm-os-semantic-substrate/registry/lawfirm-os-repo-registry.json",
+  "must_not_own": [
+    "canonical lifecycle policy",
+    "promotion authority",
+    "runtime evidence persistence"
+  ],
+  "artifacts": [],
+  "validation": [
+    "../LawFirm-os-semantic-substrate/scripts/validate_skill_agent_control_plane.py --workspace .."
+  ]
+}

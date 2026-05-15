@@ -1,0 +1,41 @@
+{
+  "id": "legal-retrieval-planner",
+  "kind": "skill",
+  "name": "Legal retrieval planner",
+  "owning_repo": "LawFirm-os-skills-registry",
+  "owning_plane": "skills_registry",
+  "address": "lawfirm-os.skill.legal-knowledge.legal-retrieval-planner.v1.draft",
+  "version": "1.0.0",
+  "lifecycle_state": "draft",
+  "risk_tier": "medium",
+  "capabilities": [
+    "retrieval_plan",
+    "hybrid_retrieval"
+  ],
+  "inputs": [
+    "task_context",
+    "policy_context"
+  ],
+  "outputs": [
+    "skill_result",
+    "evidence_refs"
+  ],
+  "side_effect_class": "none",
+  "data_classes": [
+    "synthetic",
+    "metadata_only"
+  ],
+  "approval_required": false,
+  "quality_score_ref": "skill-quality-score://legal-retrieval-planner/latest",
+  "graph_node_ref": "skill-agent-graph://skill/legal-retrieval-planner",
+  "related_workflows": [
+    "legal_knowledge.contract_review_context_bundle.v1"
+  ],
+  "supersedes": [],
+  "superseded_by": null,
+  "combines_with": [],
+  "recommended_update_policy": "auto_propose",
+  "created_at": "2026-05-14T17:50:46.883299+00:00",
+  "updated_at": "2026-05-14T17:50:46.883319+00:00",
+  "notes": "Draft metadata. Promotion requires governance according to lifecycle policy."
+}
