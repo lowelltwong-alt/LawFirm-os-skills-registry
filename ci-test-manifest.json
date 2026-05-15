@@ -1,0 +1,363 @@
+{
+  "schema_version": "repo_ci_test_manifest.v1",
+  "repo": "LawFirm-os-skills-registry",
+  "owning_plane": "skills_registry",
+  "architecture_role": "skills_registry",
+  "canonical_authority_allowed": false,
+  "central_router_authority": "../LawFirm-os-semantic-substrate/registry/ci-test-route-registry.json",
+  "test_artifacts": [
+    {
+      "test_id": "LawFirm-os-skills-registry.tests.test_design_algorithm.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_design_algorithm.py",
+      "runner_command": "python -m pytest tests/test_design_algorithm.py -q",
+      "owning_repo": "LawFirm-os-skills-registry",
+      "owning_plane": "skills_registry",
+      "architecture_surface": [
+        "skills_registry",
+        "repo_local_regression"
+      ],
+      "risk_tier": "medium",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "source_code_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_design_algorithm.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "skills_registry"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-skills-registry tests/test_design_algorithm.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-skills-registry.tests.test_draft_skill_index.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_draft_skill_index.py",
+      "runner_command": "python -m pytest tests/test_draft_skill_index.py -q",
+      "owning_repo": "LawFirm-os-skills-registry",
+      "owning_plane": "skills_registry",
+      "architecture_surface": [
+        "skills_registry",
+        "repo_local_regression"
+      ],
+      "risk_tier": "medium",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "source_code_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_draft_skill_index.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "skills_registry"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-skills-registry tests/test_draft_skill_index.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-skills-registry.tests.test_evaluation.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_evaluation.py",
+      "runner_command": "python -m pytest tests/test_evaluation.py -q",
+      "owning_repo": "LawFirm-os-skills-registry",
+      "owning_plane": "skills_registry",
+      "architecture_surface": [
+        "skills_registry",
+        "evaluation_surface"
+      ],
+      "risk_tier": "medium",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "eval_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_evaluation.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "skills_registry"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-skills-registry tests/test_evaluation.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-skills-registry.tests.test_first_party_reactor.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_first_party_reactor.py",
+      "runner_command": "python -m pytest tests/test_first_party_reactor.py -q",
+      "owning_repo": "LawFirm-os-skills-registry",
+      "owning_plane": "skills_registry",
+      "architecture_surface": [
+        "skills_registry",
+        "repo_local_regression"
+      ],
+      "risk_tier": "medium",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "source_code_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_first_party_reactor.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "skills_registry"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-skills-registry tests/test_first_party_reactor.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-skills-registry.tests.test_fixture_harness.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_fixture_harness.py",
+      "runner_command": "python -m pytest tests/test_fixture_harness.py -q",
+      "owning_repo": "LawFirm-os-skills-registry",
+      "owning_plane": "skills_registry",
+      "architecture_surface": [
+        "skills_registry",
+        "repo_local_regression"
+      ],
+      "risk_tier": "medium",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "source_code_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_fixture_harness.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "skills_registry"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-skills-registry tests/test_fixture_harness.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-skills-registry.tests.test_registry_gap_factory.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_registry_gap_factory.py",
+      "runner_command": "python -m pytest tests/test_registry_gap_factory.py -q",
+      "owning_repo": "LawFirm-os-skills-registry",
+      "owning_plane": "skills_registry",
+      "architecture_surface": [
+        "skills_registry",
+        "registry_integrity"
+      ],
+      "risk_tier": "protected",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "registry_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_registry_gap_factory.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "skills_registry",
+        "registry_integrity",
+        "protected"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-skills-registry tests/test_registry_gap_factory.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 10,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-skills-registry.tests.test_security_hardening.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_security_hardening.py",
+      "runner_command": "python -m pytest tests/test_security_hardening.py -q",
+      "owning_repo": "LawFirm-os-skills-registry",
+      "owning_plane": "skills_registry",
+      "architecture_surface": [
+        "skills_registry",
+        "security_safety_surface"
+      ],
+      "risk_tier": "protected",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "security_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_security_hardening.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "skills_registry",
+        "protected"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-skills-registry tests/test_security_hardening.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 10,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-skills-registry.tests.test_security_scanner.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_security_scanner.py",
+      "runner_command": "python -m pytest tests/test_security_scanner.py -q",
+      "owning_repo": "LawFirm-os-skills-registry",
+      "owning_plane": "skills_registry",
+      "architecture_surface": [
+        "skills_registry",
+        "security_safety_surface"
+      ],
+      "risk_tier": "protected",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "security_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_security_scanner.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "skills_registry",
+        "protected"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-skills-registry tests/test_security_scanner.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 10,
+      "full_regression_required": false
+    }
+  ],
+  "explicit_test_artifact_exclusions": [
+    {
+      "path": "tests/conftest.py",
+      "reason": "pytest support file, not standalone test artifact"
+    },
+    {
+      "path": "evals/fixtures/**",
+      "reason": "eval fixture data routed through registered eval tests, not standalone runner"
+    },
+    {
+      "path": "evals/gold/**",
+      "reason": "eval gold-label data routed through registered eval tests, not standalone runner"
+    }
+  ],
+  "must_not_own": [
+    "canonical lifecycle states",
+    "route authority",
+    "promotion authority without governance decision",
+    "AI front-door authority"
+  ],
+  "notes": "Generated by LawFirm OS CI Test Router Governance patch from the current test surface. Update this manifest whenever any test artifact is added, removed, or moved."
+}
