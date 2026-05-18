@@ -8,7 +8,12 @@ from .intake.importer import import_skill
 from .security.scanner import write_scan_report, update_threat_rules
 from .evaluation.evaluator import write_evaluation
 from .governance.design_algorithm import write_algorithm_grade
+from .domain.skill_trust_record import emit_skill_trust_record
+from .qa.skill_qa import write_skill_qa_report
+from .qa.trust_surface_diff import diff_trust_surfaces
 from .registry.store import approve_skill, list_approved, install_codex_skills
+from .domain.trust_surface import load_skill_metadata
+from .util.files import read_json, write_json
 from .gap_detection.detector import detect_skill_gaps, write_skill_gaps
 from .factory.drafter import draft_skill_from_gap_file
 from .factory.first_party_reactor import react_to_skill_gaps
@@ -28,7 +33,10 @@ def parser():
     a=s.add_parser('update-threat-rules'); a.add_argument('--from-file'); a.add_argument('--from-url'); a.add_argument('--allow-network', action='store_true'); a.add_argument('--approve', action='store_true')
     a=s.add_parser('evaluate-skill'); a.add_argument('--skill', required=True); a.add_argument('--out', required=True)
     a=s.add_parser('grade-algorithm'); a.add_argument('--skill', required=True); a.add_argument('--out', required=True)
-    a=s.add_parser('approve-skill'); a.add_argument('--skill', required=True); a.add_argument('--evaluation', required=True); a.add_argument('--approved-dir', default='skills/approved'); a.add_argument('--registry', default='registry/approved-skills.json'); a.add_argument('--approve', action='store_true')
+    a=s.add_parser('skill-qa'); a.add_argument('--skill', required=True); a.add_argument('--out', required=True); a.add_argument('--as-of')
+    a=s.add_parser('emit-trust-record'); a.add_argument('--skill', required=True); a.add_argument('--qa-report', required=True); a.add_argument('--out', required=True); a.add_argument('--prior-trust-record'); a.add_argument('--approved-by'); a.add_argument('--approved-at')
+    a=s.add_parser('trust-surface-diff'); a.add_argument('--prior', required=True); a.add_argument('--current', required=True); a.add_argument('--out', required=True)
+    a=s.add_parser('approve-skill'); a.add_argument('--skill', required=True); a.add_argument('--evaluation', required=True); a.add_argument('--trust-record', required=True); a.add_argument('--prior-trust-record'); a.add_argument('--approved-dir', default='skills/approved'); a.add_argument('--registry', default='registry/approved-skills.json'); a.add_argument('--audit-ledger', default='registry/skill_install_update_audit.jsonl'); a.add_argument('--approve', action='store_true')
     a=s.add_parser('list-approved'); a.add_argument('--registry', default='registry/approved-skills.json')
     a=s.add_parser('install-codex-skills'); a.add_argument('--registry', default='registry/approved-skills.json'); a.add_argument('--target-repo', required=True); a.add_argument('--include-scripts', action='store_true'); a.add_argument('--approve-scripts', action='store_true')
     a=s.add_parser('detect-skill-gaps'); a.add_argument('--clusters', required=True); a.add_argument('--out', default='reports/skill_gap_candidates.jsonl'); a.add_argument('--min-support', type=int, default=3)
@@ -48,7 +56,19 @@ def main(argv=None):
     if args.cmd=='update-threat-rules': pj(update_threat_rules(args.from_file,args.from_url,args.approve,args.allow_network)); return 0
     if args.cmd=='evaluate-skill': r=write_evaluation(args.skill,args.out); pj({'out':args.out,'passed':r['passed'],'recommendation':r['recommendation'],'overall':r['scores']['overall'],'algorithmic_elegance':r['scores']['algorithmic_elegance']}); return 0
     if args.cmd=='grade-algorithm': r=write_algorithm_grade(args.skill,args.out); pj({'out':args.out,'recommendation':r['recommendation'],'overall':r['scores']['overall'],'penalties':r['penalties']}); return 0
-    if args.cmd=='approve-skill': pj(approve_skill(args.skill,args.evaluation,args.approved_dir,args.registry,args.approve)); return 0
+    if args.cmd=='skill-qa': r=write_skill_qa_report(args.skill,args.out,as_of=args.as_of); pj({'out':args.out,'qa_verdict':r['qa_verdict'],'skill_id':r['skill_id']}); return 0
+    if args.cmd=='emit-trust-record':
+        qa=read_json(args.qa_report); meta=load_skill_metadata(Path(args.skill)); skill_id=str(meta.get('id') or Path(args.skill).name)
+        diff_id=None; approval_required=qa.get('qa_verdict')=='needs_human_review'
+        if args.prior_trust_record:
+            prior=read_json(args.prior_trust_record); diff=diff_trust_surfaces(prior.get('trust_surface') or {}, qa.get('trust_surface') or {}, skill_id=skill_id)
+            write_json(Path(args.out).with_name(Path(args.out).stem + '.diff.json'), diff); diff_id=diff['trust_surface_diff_record_id']; approval_required=approval_required or diff['approval_required']
+        rec=emit_skill_trust_record(args.skill, qa_verdict=qa['qa_verdict'], approval_required=approval_required, freshness_status=qa.get('freshness',{}).get('freshness_status','unknown'), trust_surface_diff_record_id=diff_id, approved_by=args.approved_by, approved_at=args.approved_at)
+        write_json(args.out, rec); pj({'out':args.out,'skill_trust_record_id':rec['skill_trust_record_id'],'approval_required':rec['approval_required']}); return 0
+    if args.cmd=='trust-surface-diff':
+        prior=read_json(args.prior); current=read_json(args.current); skill_id=str(current.get('skill_id') or prior.get('skill_id') or 'unknown')
+        diff=diff_trust_surfaces(prior.get('trust_surface') or prior, current.get('trust_surface') or current, skill_id=skill_id); write_json(args.out, diff); pj(diff); return 0
+    if args.cmd=='approve-skill': pj(approve_skill(args.skill,args.evaluation,args.approved_dir,args.registry,args.approve,trust_record_path=args.trust_record,prior_trust_record_path=args.prior_trust_record,audit_ledger_path=args.audit_ledger)); return 0
     if args.cmd=='list-approved': pj(list_approved(args.registry)); return 0
     if args.cmd=='install-codex-skills': pj(install_codex_skills(args.registry,args.target_repo,args.include_scripts,args.approve_scripts)); return 0
     if args.cmd=='detect-skill-gaps': rows=detect_skill_gaps(args.clusters,args.min_support); write_skill_gaps(rows,args.out); pj({'candidate_count':len(rows),'out':args.out}); return 0
