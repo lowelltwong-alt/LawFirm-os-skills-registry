@@ -4,10 +4,24 @@ import re
 from pathlib import Path
 from typing import Any
 
-from ..domain.trust_surface import load_skill_metadata
+from ..domain.trust_surface import load_skill_metadata, validate_provider_metadata
 
 
-_FORBIDDEN_CORE_KEYS = frozenset({"route_id", "event_class", "defect_class", "admission_reason_code"})
+_FORBIDDEN_CORE_KEYS = frozenset(
+    {
+        "route_id",
+        "event_class",
+        "defect_class",
+        "admission_reason_code",
+        "reason_code",
+        "semantic_mutation_action",
+        "model_policy",
+        "model_policy_id",
+        "connector_authority",
+        "approval_state",
+        "approval_status",
+    }
+)
 _CANON_CLAIM_RE = re.compile(
     r"(?i)\b(canonical\s+legal\s+truth|source\s+of\s+truth|defines?\s+route_id|defines?\s+event_class|"
     r"mutates?\s+(?:the\s+)?semantic\s+substrate|promotes?\s+to\s+canon)\b"
@@ -30,15 +44,13 @@ def scan_skill_authority_violations(skill_dir: str | Path) -> list[dict[str, str
             )
 
     provider = metadata.get("provider_metadata")
-    if isinstance(provider, dict):
-        for bad_key in _FORBIDDEN_CORE_KEYS:
-            if bad_key in provider:
-                violations.append(
-                    {
-                        "kind": "provider_metadata_must_not_carry_authority",
-                        "detail": f"provider_metadata must not include {bad_key}",
-                    }
-                )
+    for failure in validate_provider_metadata(provider):
+        violations.append(
+            {
+                "kind": "provider_metadata_must_not_carry_authority",
+                "detail": failure,
+            }
+        )
 
     skill_md = root / "SKILL.md"
     if skill_md.exists():

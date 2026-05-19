@@ -21,6 +21,8 @@ def approve_skill(
     *,
     trust_record_path: str | Path | None = None,
     prior_trust_record_path: str | Path | None = None,
+    first_approval: bool = False,
+    approval_record_path: str | Path | None = None,
     audit_ledger_path: str | Path = "registry/skill_install_update_audit.jsonl",
 ):
     if not approve:
@@ -44,10 +46,18 @@ def approve_skill(
     skill_dir = Path(skill_dir)
     doc = load_skill(skill_dir)
     skill_id = doc.name or skill_dir.name
+    approval_record = _load_approval_record(approval_record_path)
 
     failures = validate_skill_trust_record_for_approval(trust_record, skill_id=skill_id)
     if failures:
         raise SkillTrustError("; ".join(failures))
+
+    registry = read_json(registry_path, default={"schema_version": "1.0", "skills": []})
+    prior_entry = next((e for e in registry.get("skills", []) if e.get("skill_id") == skill_id), None)
+    if prior_entry and not prior_trust_record_path:
+        prior_trust_record_path = prior_entry.get("skill_trust_record_path")
+    if prior_entry and not prior_trust_record_path:
+        raise SkillTrustError("existing skill approval requires prior_trust_record_path")
 
     if prior_trust_record_path:
         prior = read_json(prior_trust_record_path)
@@ -56,8 +66,15 @@ def approve_skill(
             trust_record.get("trust_surface") or {},
             skill_id=skill_id,
         )
-        if surface_diff["approval_required"] and not trust_record.get("approved_by"):
-            raise SkillTrustError("trust surface diff requires human approval (approved_by on trust record)")
+        if surface_diff["approval_required"] and not _approval_record_allows(approval_record):
+            raise SkillTrustError("trust surface diff requires separate approved HumanApprovalRecord")
+    else:
+        if not first_approval:
+            raise SkillTrustError("first approval requires explicit first_approval mode")
+        if security.get("risk_score", 100) != 0:
+            raise SkillTrustError("first approval requires zero security risk score")
+        if not _approval_record_allows(approval_record):
+            raise SkillTrustError("first approval requires separate approved HumanApprovalRecord")
 
     target = Path(approved_dir) / skill_id
     if target.exists():
@@ -65,7 +82,6 @@ def approve_skill(
     ensure_dir(target.parent)
     shutil.move(str(skill_dir), str(target))
 
-    registry = read_json(registry_path, default={"schema_version": "1.0", "skills": []})
     entry = {
         "skill_id": skill_id,
         "version": trust_record.get("skill_version", "0.1.0"),
@@ -78,6 +94,7 @@ def approve_skill(
         "evaluation_report": str(evaluation_report),
         "skill_trust_record_id": trust_record["skill_trust_record_id"],
         "skill_trust_record_path": str(trust_record_path),
+        "approval_record_path": str(approval_record_path) if approval_record_path else None,
         "scores": evaluation.get("scores", {}),
     }
     registry["skills"] = [e for e in registry.get("skills", []) if e.get("skill_id") != skill_id] + [entry]
@@ -93,6 +110,29 @@ def approve_skill(
     )
     append_install_update_audit(audit_ledger_path, audit)
     return entry
+
+
+def _load_approval_record(path: str | Path | None) -> dict | None:
+    if not path:
+        return None
+    record = read_json(path)
+    if not isinstance(record, dict):
+        raise SkillTrustError("approval_record_path must point to a JSON object")
+    return record
+
+
+def _approval_record_allows(record: dict | None) -> bool:
+    if not record:
+        return False
+    if record.get("schema_version") not in {"1.0", "human_approval_record.v1"}:
+        return False
+    if record.get("decision") not in {"approved", "approved_with_conditions"}:
+        return False
+    if not record.get("approval_id"):
+        return False
+    if not record.get("approver_role"):
+        return False
+    return True
 
 
 def list_approved(registry_path="registry/approved-skills.json"):

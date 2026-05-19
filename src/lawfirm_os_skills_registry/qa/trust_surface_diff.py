@@ -3,6 +3,7 @@ from __future__ import annotations
 import uuid
 from typing import Any
 
+from ..domain.trust_surface import TRUST_SURFACE_FIELDS
 from ..util.time import utc_now
 
 
@@ -13,15 +14,15 @@ def diff_trust_surfaces(
     skill_id: str,
 ) -> dict[str, Any]:
     """Compare trust surfaces; any material change requires human approval."""
-    fields = ("declared_tools", "declared_hooks", "declared_write_paths", "declared_urls", "declared_purpose_hash")
+    fields = TRUST_SURFACE_FIELDS
     changes: dict[str, dict[str, list[str]]] = {}
     approval_required = False
     for field in fields:
-        before = list(prior.get(field) or []) if field != "declared_purpose_hash" else prior.get(field)
-        after = list(current.get(field) or []) if field != "declared_purpose_hash" else current.get(field)
+        before = list(prior.get(field) or []) if isinstance(prior.get(field) or [], list) else prior.get(field)
+        after = list(current.get(field) or []) if isinstance(current.get(field) or [], list) else current.get(field)
         if before != after:
             approval_required = True
-            if field == "declared_purpose_hash":
+            if not isinstance(before, list) or not isinstance(after, list):
                 changes[field] = {"before": [str(before)], "after": [str(after)]}
             else:
                 changes[field] = {

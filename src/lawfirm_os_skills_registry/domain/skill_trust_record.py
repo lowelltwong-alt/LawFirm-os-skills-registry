@@ -6,7 +6,7 @@ from typing import Any
 
 from ..contracts import load_contract_surface_sha256
 from ..util.time import utc_now
-from .trust_surface import extract_trust_surface, load_skill_metadata
+from .trust_surface import extract_trust_surface, load_skill_metadata, validate_provider_metadata
 
 
 class SkillTrustError(ValueError):
@@ -108,10 +108,11 @@ def validate_skill_trust_record_for_approval(record: dict[str, Any], *, skill_id
     verdict = record.get("qa_verdict")
     if verdict not in {"passed", "needs_human_review"}:
         failures.append("qa_verdict must be passed or needs_human_review for approval")
-    if verdict == "needs_human_review" and not record.get("approved_by"):
-        failures.append("needs_human_review requires approved_by on trust record")
-    if record.get("approval_required") and not record.get("approved_by"):
-        failures.append("approval_required trust record requires approved_by")
     if record.get("qa_verdict") == "failed":
         failures.append("qa_verdict failed cannot approve")
+    surface = record.get("trust_surface")
+    if not isinstance(surface, dict):
+        failures.append("trust_surface must be present")
+    provider_failures = validate_provider_metadata(record.get("provider_metadata"))
+    failures.extend(provider_failures)
     return failures
