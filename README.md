@@ -64,3 +64,11 @@ The semantic gate is deterministic and local-first. It looks for disguised data 
 - Skill Factory drafts do not approve themselves.
 - Approved skill installation skips `scripts/` by default.
 - High-risk tools, scripts, network, shell, browser, and external writes require human approval.
+
+## Skill Context Discipline Dependency
+
+- Skills must declare accepted context types, forbidden context types, evidence requirements, provenance behavior, allowed autonomy level, required human gate, data scope, revocation path, and trust status.
+- Skills must not strip provenance.
+- Skills must not expand authority.
+- Skills must not convert draft institutional knowledge into approved institutional knowledge.
+- Context-discipline failures should affect trust scoring and quarantine/review status.

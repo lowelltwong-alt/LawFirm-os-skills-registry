@@ -50,3 +50,11 @@ If your workspace layout differs, point `--substrate-root` at your `LawFirm-os-s
 
     python -m pytest -q
     python ../LawFirm-os-semantic-substrate/scripts/validate_skill_agent_control_plane.py --workspace ..
+
+## Skill Context Discipline Dependency
+
+- Skills must declare accepted context types, forbidden context types, evidence requirements, provenance behavior, allowed autonomy level, required human gate, data scope, revocation path, and trust status.
+- Skills must not strip provenance.
+- Skills must not expand authority.
+- Skills must not convert draft institutional knowledge into approved institutional knowledge.
+- Context-discipline failures should affect trust scoring and quarantine/review status.
