@@ -65,6 +65,12 @@ The semantic gate is deterministic and local-first. It looks for disguised data 
 - Approved skill installation skips `scripts/` by default.
 - High-risk tools, scripts, network, shell, browser, and external writes require human approval.
 
+## Governance Dependency-Map Mirror
+
+This repo carries `.ai/control/governance-dependency-map-mirror.json` as a local mirror of the upstream governance dependency map in `LawFirm-os-semantic-substrate/registry/governance-dependency-map.json`.
+
+If governance-facing skill supply-chain files change, check the upstream governance dependency map and update the local mirror, AI work router, AI table of contents, README, validator, and tests when affected. The mirror is downstream enforcement only; it cannot override Semantic Substrate governance, let skills expand their own authority, promote skills without control-plane review, define canonical lifecycle or promotion authority, or authorize production automation.
+
 ## Skill Context Discipline Dependency
 
 - Skills must declare accepted context types, forbidden context types, evidence requirements, provenance behavior, allowed autonomy level, required human gate, data scope, revocation path, and trust status.

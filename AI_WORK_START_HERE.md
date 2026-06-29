@@ -38,6 +38,12 @@ If your workspace layout differs, point `--substrate-root` at your `LawFirm-os-s
 
 <!-- END REPO_SPECIFIC_INSTRUCTIONS -->
 
+## Governance Dependency-Map Mirror
+
+If this repo changes governance-facing files, check the upstream `../LawFirm-os-semantic-substrate/registry/governance-dependency-map.json` and update `.ai/control/governance-dependency-map-mirror.json`, local discovery surfaces, and `scripts/validate_governance_dependency_map_mirror.py` when affected.
+
+The governance dependency-map mirror is downstream enforcement only. It cannot override Semantic Substrate governance, let skills expand their own authority, promote skills without control-plane review, define canonical lifecycle or promotion authority, or authorize production automation.
+
 ## Skill-Agent Control Plane References
 
 - skill-agent-manifest.json
