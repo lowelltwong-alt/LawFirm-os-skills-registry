@@ -1,28 +1,60 @@
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 
 import pytest
 
-from lawfirm_os_skills_registry.audit.install_update_log import append_install_update_audit, emit_install_update_audit_record
+from lawfirm_os_skills_registry.audit.install_update_log import (
+    append_install_update_audit,
+    emit_install_update_audit_record,
+)
 from lawfirm_os_skills_registry.domain.skill_trust_record import (
     SkillTrustError,
     emit_skill_trust_record,
     validate_skill_trust_record_for_approval,
 )
-from lawfirm_os_skills_registry.domain.trust_surface import TRUST_SURFACE_FIELDS, extract_provider_metadata, extract_trust_surface
-from lawfirm_os_skills_registry.governance.authority_guard import scan_skill_authority_violations
-from lawfirm_os_skills_registry.qa.freshness_validator import validate_bundled_legal_freshness
+from lawfirm_os_skills_registry.domain.trust_surface import (
+    TRUST_SURFACE_FIELDS,
+    extract_provider_metadata,
+    extract_trust_surface,
+)
+from lawfirm_os_skills_registry.governance.authority_guard import (
+    scan_skill_authority_violations,
+)
+from lawfirm_os_skills_registry.qa.freshness_validator import (
+    validate_bundled_legal_freshness,
+)
 from lawfirm_os_skills_registry.qa.skill_qa import run_skill_qa, write_skill_qa_report
 from lawfirm_os_skills_registry.qa.trust_surface_diff import diff_trust_surfaces
 from lawfirm_os_skills_registry.registry.store import approve_skill
 
 ROOT = Path(__file__).resolve().parents[1]
 WORKSPACE = ROOT.parent
-SUBSTRATE = WORKSPACE / "LawFirm-os-semantic-substrate"
+WORKSPACE_ROOT = ROOT.parent.parent
 FIXTURES = Path(__file__).parent / "fixtures"
+
+
+def _resolve_substrate() -> Path:
+    env_path = os.getenv("LAWFIRM_OS_SEMANTIC_SUBSTRATE_PATH")
+    candidates = [
+        Path(env_path).expanduser() if env_path else None,
+        WORKSPACE / "LawFirm-os-semantic-substrate",
+        WORKSPACE / "semantic-substrate-phase3-20260630",
+        WORKSPACE_ROOT / "LawFirm-os-semantic-substrate",
+        WORKSPACE_ROOT / "repos" / "semantic-substrate-phase3-20260630",
+    ]
+    for candidate in candidates:
+        if candidate and candidate.exists():
+            return candidate.resolve()
+    raise RuntimeError(
+        "LawFirm OS Semantic Substrate checkout not found for schema fixtures"
+    )
+
+
+SUBSTRATE = _resolve_substrate()
 
 
 def _schema(name: str) -> dict:
@@ -73,7 +105,11 @@ def _eval_report(tmp_path: Path) -> Path:
         json.dumps(
             {
                 "passed": True,
-                "security": {"risk_score": 0, "recommendation": "safe_for_eval", "semantic_risk_level": "low"},
+                "security": {
+                    "risk_score": 0,
+                    "recommendation": "safe_for_eval",
+                    "semantic_risk_level": "low",
+                },
                 "scores": {"overall": 90},
             }
         ),
@@ -103,7 +139,9 @@ def _approval_record(tmp_path: Path, *, decision: str = "approved") -> Path:
     return path
 
 
-def _trust_record(skill_dir: Path, *, approved_by: str | None = "human-reviewer") -> dict:
+def _trust_record(
+    skill_dir: Path, *, approved_by: str | None = "human-reviewer"
+) -> dict:
     return emit_skill_trust_record(
         skill_dir,
         qa_verdict="passed",
@@ -115,7 +153,7 @@ def _trust_record(skill_dir: Path, *, approved_by: str | None = "human-reviewer"
 
 @pytest.fixture
 def jsonschema_validate():
-    jsonschema = pytest.importorskip("jsonschema")
+    pytest.importorskip("jsonschema")
     from jsonschema import validate
 
     return validate
@@ -205,7 +243,9 @@ def test_stale_bundled_legal_reference_flagged(tmp_path: Path) -> None:
             ]
         },
     )
-    as_of = datetime(2026, 5, 18, tzinfo=timezone.utc).isoformat().replace("+00:00", "Z")
+    as_of = (
+        datetime(2026, 5, 18, tzinfo=timezone.utc).isoformat().replace("+00:00", "Z")
+    )
     result = validate_bundled_legal_freshness(skill, as_of=as_of)
     assert result["freshness_status"] == "stale"
     assert result["stale_references"]
@@ -248,14 +288,18 @@ def test_claude_identifiers_remain_provider_metadata(tmp_path: Path) -> None:
     assert "event_class" not in meta
 
 
-def test_skill_trust_record_matches_substrate_schema(tmp_path: Path, jsonschema_validate) -> None:
+def test_skill_trust_record_matches_substrate_schema(
+    tmp_path: Path, jsonschema_validate
+) -> None:
     skill = _write_skill(tmp_path, "schema-skill")
     record = _trust_record(skill)
     jsonschema_validate(record, _schema("skill-trust-record.schema.json"))
 
 
 def test_forbidden_route_id_in_metadata_flagged(tmp_path: Path) -> None:
-    skill = _write_skill(tmp_path, "bad-route-skill", metadata_extra={"route_id": "invented.route"})
+    skill = _write_skill(
+        tmp_path, "bad-route-skill", metadata_extra={"route_id": "invented.route"}
+    )
     violations = scan_skill_authority_violations(skill)
     assert any(v["kind"] == "forbidden_core_field" for v in violations)
 
@@ -266,7 +310,11 @@ def test_evidence_ref_links_are_refs_not_canon(tmp_path: Path) -> None:
         "evidence-ref-skill",
         metadata_extra={
             "evidence_ref_links": [
-                {"source_ref_id": "sr-synthetic", "passage_ref_id": "pr-synthetic", "claim_ref_id": "cl-synthetic"}
+                {
+                    "source_ref_id": "sr-synthetic",
+                    "passage_ref_id": "pr-synthetic",
+                    "claim_ref_id": "cl-synthetic",
+                }
             ]
         },
     )
@@ -295,11 +343,17 @@ def test_approve_with_valid_trust_record(tmp_path: Path) -> None:
     assert (tmp_path / "approved" / "approve-trust-skill").exists()
 
 
-def test_approval_blocked_when_trust_surface_diff_without_approver(tmp_path: Path) -> None:
+def test_approval_blocked_when_trust_surface_diff_without_approver(
+    tmp_path: Path,
+) -> None:
     skill = _write_skill(tmp_path, "diff-block-skill")
     report = _eval_report(tmp_path)
-    prior = emit_skill_trust_record(skill, qa_verdict="passed", approval_required=False, freshness_status="unknown")
-    trust = emit_skill_trust_record(skill, qa_verdict="passed", approval_required=False, freshness_status="unknown")
+    prior = emit_skill_trust_record(
+        skill, qa_verdict="passed", approval_required=False, freshness_status="unknown"
+    )
+    trust = emit_skill_trust_record(
+        skill, qa_verdict="passed", approval_required=False, freshness_status="unknown"
+    )
     trust["trust_surface"] = dict(trust["trust_surface"])
     trust["trust_surface"]["declared_tools"] = ["read_file", "network_fetch"]
     prior_path = tmp_path / "prior.json"
@@ -318,11 +372,15 @@ def test_approval_blocked_when_trust_surface_diff_without_approver(tmp_path: Pat
         )
 
 
-def test_first_approval_requires_explicit_mode_and_approval_record(tmp_path: Path) -> None:
+def test_first_approval_requires_explicit_mode_and_approval_record(
+    tmp_path: Path,
+) -> None:
     skill = _write_skill(tmp_path, "first-approval-skill")
     report = _eval_report(tmp_path)
     trust_path = tmp_path / "trust.json"
-    trust_path.write_text(json.dumps(_trust_record(skill, approved_by="self-attested")), encoding="utf-8")
+    trust_path.write_text(
+        json.dumps(_trust_record(skill, approved_by="self-attested")), encoding="utf-8"
+    )
     with pytest.raises(SkillTrustError, match="first approval"):
         approve_skill(
             skill,
@@ -344,13 +402,17 @@ def test_first_approval_requires_explicit_mode_and_approval_record(tmp_path: Pat
         )
 
 
-def test_arbitrary_approved_by_in_trust_record_does_not_satisfy_cli_approval(tmp_path: Path) -> None:
+def test_arbitrary_approved_by_in_trust_record_does_not_satisfy_cli_approval(
+    tmp_path: Path,
+) -> None:
     from lawfirm_os_skills_registry.cli import main
 
     skill = _write_skill(tmp_path, "cli-self-attested-skill")
     report = _eval_report(tmp_path)
     trust_path = tmp_path / "trust.json"
-    trust_path.write_text(json.dumps(_trust_record(skill, approved_by="any-string")), encoding="utf-8")
+    trust_path.write_text(
+        json.dumps(_trust_record(skill, approved_by="any-string")), encoding="utf-8"
+    )
     with pytest.raises(SkillTrustError, match="HumanApprovalRecord"):
         main(
             [
@@ -374,8 +436,12 @@ def test_arbitrary_approved_by_in_trust_record_does_not_satisfy_cli_approval(tmp
 def test_update_approval_auto_discovers_prior_trust_record(tmp_path: Path) -> None:
     skill = _write_skill(tmp_path, "update-skill")
     report = _eval_report(tmp_path)
-    prior = emit_skill_trust_record(skill, qa_verdict="passed", approval_required=False, freshness_status="fresh")
-    trust = emit_skill_trust_record(skill, qa_verdict="passed", approval_required=False, freshness_status="fresh")
+    prior = emit_skill_trust_record(
+        skill, qa_verdict="passed", approval_required=False, freshness_status="fresh"
+    )
+    trust = emit_skill_trust_record(
+        skill, qa_verdict="passed", approval_required=False, freshness_status="fresh"
+    )
     trust["trust_surface"] = dict(trust["trust_surface"])
     trust["trust_surface"]["declared_connectors"] = ["new_stub_connector"]
     prior_path = tmp_path / "prior.json"
@@ -387,7 +453,12 @@ def test_update_approval_auto_discovers_prior_trust_record(tmp_path: Path) -> No
         json.dumps(
             {
                 "schema_version": "1.0",
-                "skills": [{"skill_id": "update-skill", "skill_trust_record_path": str(prior_path)}],
+                "skills": [
+                    {
+                        "skill_id": "update-skill",
+                        "skill_trust_record_path": str(prior_path),
+                    }
+                ],
             }
         ),
         encoding="utf-8",

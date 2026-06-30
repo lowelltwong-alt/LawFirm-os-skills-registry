@@ -1,0 +1,75 @@
+{
+  "id": "intake-source-grounding-review",
+  "kind": "skill",
+  "name": "Intake source grounding review",
+  "owning_repo": "LawFirm-os-skills-registry",
+  "owning_plane": "skills_registry",
+  "address": "lawfirm-os.skill.intake.intake-source-grounding-review.v1.draft",
+  "version": "0.1.0",
+  "lifecycle_state": "draft",
+  "risk_tier": "high",
+  "capabilities": [
+    "source_grounding",
+    "intake_preflight",
+    "evidence_refs"
+  ],
+  "inputs": [
+    "intake_source_inventory_candidate",
+    "source_refs",
+    "passage_refs",
+    "claim_refs",
+    "policy_context"
+  ],
+  "outputs": [
+    "source_grounding_review_report",
+    "missing_required_context",
+    "evidence_refs"
+  ],
+  "side_effect_class": "none",
+  "data_classes": [
+    "synthetic",
+    "metadata_only"
+  ],
+  "approval_required": false,
+  "accepted_context_types": [
+    "synthetic_intake_source_inventory",
+    "source_ref",
+    "passage_ref",
+    "claim_ref",
+    "coverage_record"
+  ],
+  "forbidden_context_types": [
+    "raw_client_payload",
+    "real_matter_data",
+    "production_connector_credentials",
+    "hidden_chain_of_thought"
+  ],
+  "evidence_requirements": [
+    "source_hash_required",
+    "passage_ref_required_for_observed_fact",
+    "claim_ref_required_for_derived_signal",
+    "human_review_required_for_role_or_posture"
+  ],
+  "provenance_behavior": "preserve_source_ids_hashes_offsets_and_review_status",
+  "allowed_autonomy_level": "review_candidate_only",
+  "required_human_gate": "before_role_posture_budget_or_conflict_use",
+  "data_scope": "synthetic_only_until_governance_approval",
+  "revocation_path": "remove_from_proposed_draft_skill_index_and_quarantine",
+  "trust_status": "draft_candidate_unapproved",
+  "quality_score_ref": "skill-quality-score://intake-source-grounding-review/latest",
+  "graph_node_ref": "skill-agent-graph://skill/intake-source-grounding-review",
+  "related_workflows": [
+    "intake.preflight.source_grounding.v1",
+    "legal_knowledge.intake_context_bundle_review.v0_1"
+  ],
+  "supersedes": [],
+  "superseded_by": null,
+  "combines_with": [
+    "legal-context-bundle-assembler",
+    "legal-prompt-injection-boundary-review"
+  ],
+  "recommended_update_policy": "auto_propose",
+  "created_at": "2026-06-30T00:00:00Z",
+  "updated_at": "2026-06-30T00:00:00Z",
+  "notes": "Draft candidate metadata. Promotion requires control-plane governance and human review."
+}

@@ -11,6 +11,11 @@ This repo manages draft and candidate skill supply-chain surfaces under Semantic
 - `README.md` - current skill supply-chain scope and non-negotiable boundaries.
 - `.ai/control/governance-dependency-map-mirror.json` - local mirror of the upstream governance dependency map; it cannot override `LawFirm-os-semantic-substrate`.
 - `scripts/validate_governance_dependency_map_mirror.py` - fail-closed check for mirror shape and watched governance paths.
+- `config/validation-runtime-policy.yaml` - minimum runtime ceiling policy for full and focused pytest validation.
+- `scripts/run_full_pytest.py` - required pytest wrapper that applies the validation runtime policy marker and long timeout.
+- `registry/proposed-intake-specialist-skills.json` - draft candidate intake specialist skills proposal.
+- `docs/INTAKE_SPECIALIST_SKILL_REVIEW.md` - human-readable review guidance for the intake specialist skill proposal.
+- `scripts/validate_intake_specialist_skill_review.py` - deterministic validator for the intake specialist draft skill surfaces.
 
 ## Contract Authority
 
@@ -27,3 +32,12 @@ This repo manages draft and candidate skill supply-chain surfaces under Semantic
 - no automatic install without approval
 - no Semantic Substrate writes
 - no production connector or external write authority
+
+## Candidate Intake Specialist Skills
+
+- `skills/draft/intake-source-grounding-review`
+- `skills/draft/labor-employment-party-role-mapper`
+- `skills/draft/intake-budget-driver-context-review`
+- `skills/draft/carrier-rejection-learning-loop-review`
+
+These are draft candidates only. They do not approve themselves, install themselves, expand authority, mutate Semantic Substrate, define canonical taxonomy, ingest real data, or authorize production automation.

@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      SEMANTIC_SUBSTRATE_REPOSITORY: lowelltwong-alt/LawFirm-os-semantic-substrate
+    steps:
+      - name: Checkout skills registry repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+
+      - name: Checkout Law Firm OS Semantic Substrate for schema fixtures
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.SEMANTIC_SUBSTRATE_REPOSITORY }}
+          path: LawFirm-os-semantic-substrate
+
+      - name: Run tests
+        env:
+          LAWFIRM_OS_SEMANTIC_SUBSTRATE_PATH: ${{ github.workspace }}/LawFirm-os-semantic-substrate
+        run: python scripts/run_full_pytest.py

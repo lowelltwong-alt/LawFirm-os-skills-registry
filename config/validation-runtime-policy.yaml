@@ -1,0 +1,21 @@
+policy_id: skills-registry-validation-runtime-policy
+version: "0.1"
+status: candidate
+contains_real_firm_data: false
+
+# Agents and humans must use this policy-backed wrapper instead of raw pytest.
+# Skill supply-chain tests can grow as registry surfaces expand, and short/default
+# tool ceilings create false failures.
+commands:
+  full_pytest:
+    command: python -m pytest -q
+    minimum_timeout_seconds: 1800
+    reason: Full suite evaluates skill supply-chain fixtures and cross-repo schema references.
+    wrapper: python scripts/run_full_pytest.py
+  focused_pytest:
+    command: python -m pytest <paths> -q
+    minimum_timeout_seconds: 1800
+    reason: Focused tests may still load registry, skill, or substrate fixtures and should not inherit a short ceiling.
+    wrapper: python scripts/run_full_pytest.py <paths> -q
+
+agent_instruction: Use the configured minimum timeout or higher for pytest commands; full and focused pytest must run through scripts/run_full_pytest.py and direct pytest invocation is blocked.
