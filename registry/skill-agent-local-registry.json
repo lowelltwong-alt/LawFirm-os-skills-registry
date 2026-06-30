@@ -11,6 +11,10 @@
     "skills/draft/legal-document-integrity-verifier/SKILL_METADATA.json",
     "skills/draft/legal-adversarial-eval-builder/SKILL_METADATA.json",
     "skills/draft/legal-prompt-injection-boundary-review/SKILL_METADATA.json",
-    "skills/draft/legal-subgoal-claim-verifier/SKILL_METADATA.json"
+    "skills/draft/legal-subgoal-claim-verifier/SKILL_METADATA.json",
+    "skills/draft/intake-source-grounding-review/SKILL_METADATA.json",
+    "skills/draft/labor-employment-party-role-mapper/SKILL_METADATA.json",
+    "skills/draft/intake-budget-driver-context-review/SKILL_METADATA.json",
+    "skills/draft/carrier-rejection-learning-loop-review/SKILL_METADATA.json"
   ]
 }

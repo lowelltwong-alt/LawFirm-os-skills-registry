@@ -1,0 +1,75 @@
+{
+  "id": "carrier-rejection-learning-loop-review",
+  "kind": "skill",
+  "name": "Carrier rejection learning loop review",
+  "owning_repo": "LawFirm-os-skills-registry",
+  "owning_plane": "skills_registry",
+  "address": "lawfirm-os.skill.intake.carrier-rejection-learning-loop-review.v1.draft",
+  "version": "0.1.0",
+  "lifecycle_state": "draft",
+  "risk_tier": "high",
+  "capabilities": [
+    "carrier_rejection_review",
+    "appeal_outcome_review",
+    "learning_candidate_review"
+  ],
+  "inputs": [
+    "carrier_rejection_notice_candidate",
+    "appeal_result_candidate",
+    "budget_actual_comparison_candidate",
+    "financial_outcome_candidate"
+  ],
+  "outputs": [
+    "carrier_rejection_learning_report",
+    "unknown_pattern_candidates",
+    "learning_candidates",
+    "evidence_refs"
+  ],
+  "side_effect_class": "none",
+  "data_classes": [
+    "synthetic",
+    "metadata_only"
+  ],
+  "approval_required": false,
+  "accepted_context_types": [
+    "carrier_rejection_notice_candidate",
+    "carrier_appeal_result_candidate",
+    "budget_actual_comparison_candidate",
+    "exception_lake_candidate_ref"
+  ],
+  "forbidden_context_types": [
+    "raw_client_payload",
+    "real_matter_data",
+    "carrier_portal_credentials",
+    "authorized_external_write",
+    "hidden_chain_of_thought"
+  ],
+  "evidence_requirements": [
+    "source_ref_required",
+    "unknown_bucket_required",
+    "human_authorization_ref_required_for_appeals",
+    "learning_candidate_requires_outcome_refs"
+  ],
+  "provenance_behavior": "preserve_rejection_notice_appeal_result_financial_outcome_and_learning_refs",
+  "allowed_autonomy_level": "candidate_review_only",
+  "required_human_gate": "before_appeal_submission_budget_submission_or_rule_change",
+  "data_scope": "synthetic_only_until_governance_approval",
+  "revocation_path": "remove_from_proposed_draft_skill_index_and_quarantine",
+  "trust_status": "draft_candidate_unapproved",
+  "quality_score_ref": "skill-quality-score://carrier-rejection-learning-loop-review/latest",
+  "graph_node_ref": "skill-agent-graph://skill/carrier-rejection-learning-loop-review",
+  "related_workflows": [
+    "intake.carrier_rejection_learning_loop.v1",
+    "exception_lake.carrier_rejection_admission_review.v0_1"
+  ],
+  "supersedes": [],
+  "superseded_by": null,
+  "combines_with": [
+    "intake-budget-driver-context-review",
+    "legal-retrieval-quality-eval"
+  ],
+  "recommended_update_policy": "auto_propose",
+  "created_at": "2026-06-30T00:00:00Z",
+  "updated_at": "2026-06-30T00:00:00Z",
+  "notes": "Draft candidate metadata. Promotion requires control-plane governance and human review."
+}

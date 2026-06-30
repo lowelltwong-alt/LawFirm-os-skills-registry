@@ -40,7 +40,7 @@ This repository owns draft and candidate skill definitions, evaluation flows, an
 
 ## Required validation
 
-Before reporting success, run `python -m pytest -q` in this repository and the AI front-door integrity gate: `python ../LawFirm-os-semantic-substrate/scripts/validate_ai_front_door.py --substrate-root ../LawFirm-os-semantic-substrate`.
+Before reporting success, run `python scripts/run_full_pytest.py` in this repository and the AI front-door integrity gate: `python ../LawFirm-os-semantic-substrate/scripts/validate_ai_front_door.py --substrate-root ../LawFirm-os-semantic-substrate`. The pytest wrapper is required by `config/validation-runtime-policy.yaml`; direct pytest invocation is blocked so validation always gets the long ceiling.
 
 ## Always do
 
@@ -72,7 +72,7 @@ Before reporting success, run `python -m pytest -q` in this repository and the A
 
 ## Validation Commands
 
-    python -m pytest -q
+    python scripts/run_full_pytest.py
     python ../LawFirm-os-semantic-substrate/scripts/validate_skill_agent_control_plane.py --workspace ..
 
 ## Skill Context Discipline Dependency

@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.0",
+  "status": "draft_candidate_only",
+  "proposal_pack": "intake_vertical_specialists_candidate",
+  "purpose": "Candidate specialist skills for LawFirm-os-intake source grounding, labor and employment role mapping, budget-driver context review, and carrier rejection learning-loop review.",
+  "contains_real_firm_data": false,
+  "canonical_authority_allowed": false,
+  "approval_performed": false,
+  "external_writes_authorized": false,
+  "skills": [
+    {
+      "skill_id": "intake-source-grounding-review",
+      "source_path": "skills/draft/intake-source-grounding-review",
+      "risk_tier": "high",
+      "requires_human_review": true,
+      "may_execute_scripts": false,
+      "description": "Source-bound review of intake inventories, attachments, passage refs, claim refs, hashes, prompt-injection boundaries, and missing coverage before downstream reliance."
+    },
+    {
+      "skill_id": "labor-employment-party-role-mapper",
+      "source_path": "skills/draft/labor-employment-party-role-mapper",
+      "risk_tier": "high",
+      "requires_human_review": true,
+      "may_execute_scripts": false,
+      "description": "Candidate L&E entity, role, and relationship mapping with unknown states and evidence refs; no conflict conclusion or canonical taxonomy."
+    },
+    {
+      "skill_id": "intake-budget-driver-context-review",
+      "source_path": "skills/draft/intake-budget-driver-context-review",
+      "risk_tier": "high",
+      "requires_human_review": true,
+      "may_execute_scripts": false,
+      "description": "Candidate review of whether source-bound L&E context supports, widens, or blocks a budget proposal based on budget-driver evidence and missing facts."
+    },
+    {
+      "skill_id": "carrier-rejection-learning-loop-review",
+      "source_path": "skills/draft/carrier-rejection-learning-loop-review",
+      "risk_tier": "high",
+      "requires_human_review": true,
+      "may_execute_scripts": false,
+      "description": "Candidate review of carrier rejection, appeal result, financial outcome, and learning-loop evidence; no portal write, appeal submission, or automatic learning."
+    }
+  ],
+  "boundary_controls": {
+    "draft_candidate_only": true,
+    "human_review_required": true,
+    "may_execute_scripts": false,
+    "may_install_without_approval": false,
+    "may_define_canonical_taxonomy": false,
+    "may_mutate_semantic_substrate": false,
+    "may_authorize_external_writes": false,
+    "may_ingest_real_data": false,
+    "may_approve_budget_or_matter_opening": false
+  },
+  "approval_note": "These skills are deliberately draft candidates. Run malicious-skill-review, skill evaluation, trust-surface review, and control-plane governance before approval or installation."
+}

@@ -29,9 +29,11 @@ The system is built to handle thousands of skills without letting a third-party 
 
 ```bash
 python -m pip install -e ".[dev]"
-python -m pytest
+python scripts/run_full_pytest.py
 python -m lawfirm_os_skills_registry console
 ```
+
+Use `python scripts/run_full_pytest.py` for full or focused pytest runs. Direct pytest invocation is blocked by `config/validation-runtime-policy.yaml` so local and agent validation always gets the required long timeout ceiling.
 
 ## CLI examples
 
@@ -44,6 +46,17 @@ python -m lawfirm_os_skills_registry grade-algorithm --skill quarantine/benign-r
 python -m lawfirm_os_skills_registry detect-skill-gaps --clusters examples/exception_clusters.jsonl --out reports/skill_gap_candidates.jsonl
 python -m lawfirm_os_skills_registry draft-skill --gap-candidates reports/skill_gap_candidates.jsonl
 ```
+
+## Intake Specialist Skill Review
+
+This repo carries draft candidate intake specialist skills for the governed intake-to-budget vertical:
+
+- `intake-source-grounding-review`
+- `labor-employment-party-role-mapper`
+- `intake-budget-driver-context-review`
+- `carrier-rejection-learning-loop-review`
+
+They are indexed in `registry/proposed-intake-specialist-skills.json` and remain unapproved draft candidates. They do not authorize installation, real data, production connectors, external writes, canonical taxonomies, budget approval, matter opening, carrier appeal submission, or Semantic Substrate mutation.
 
 
 ## Security hardening in v2.1

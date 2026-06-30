@@ -1,0 +1,77 @@
+{
+  "id": "intake-budget-driver-context-review",
+  "kind": "skill",
+  "name": "Intake budget driver context review",
+  "owning_repo": "LawFirm-os-skills-registry",
+  "owning_plane": "skills_registry",
+  "address": "lawfirm-os.skill.intake.intake-budget-driver-context-review.v1.draft",
+  "version": "0.1.0",
+  "lifecycle_state": "draft",
+  "risk_tier": "high",
+  "capabilities": [
+    "budget_context_review",
+    "missing_info_detection",
+    "labor_employment_budget_drivers"
+  ],
+  "inputs": [
+    "source_refs",
+    "passage_refs",
+    "claim_refs",
+    "party_role_candidate_report",
+    "budget_proposal_candidate"
+  ],
+  "outputs": [
+    "budget_context_sufficiency_report",
+    "missing_info_items",
+    "budget_effect",
+    "evidence_refs"
+  ],
+  "side_effect_class": "none",
+  "data_classes": [
+    "synthetic",
+    "metadata_only"
+  ],
+  "approval_required": false,
+  "accepted_context_types": [
+    "labor_employment_budget_context_candidate",
+    "party_role_candidate_report",
+    "source_ref",
+    "passage_ref",
+    "claim_ref"
+  ],
+  "forbidden_context_types": [
+    "raw_client_payload",
+    "real_matter_data",
+    "approved_budget",
+    "client_submission",
+    "hidden_chain_of_thought"
+  ],
+  "evidence_requirements": [
+    "source_bound_budget_driver_required",
+    "missing_info_category_required_when_evidence_absent",
+    "budget_effect_must_be_deterministic",
+    "human_review_required_before_budget_use"
+  ],
+  "provenance_behavior": "preserve_budget_driver_refs_missing_info_and_review_outcome_refs",
+  "allowed_autonomy_level": "candidate_review_only",
+  "required_human_gate": "before_budget_proposal_reliance_or_submission",
+  "data_scope": "synthetic_only_until_governance_approval",
+  "revocation_path": "remove_from_proposed_draft_skill_index_and_quarantine",
+  "trust_status": "draft_candidate_unapproved",
+  "quality_score_ref": "skill-quality-score://intake-budget-driver-context-review/latest",
+  "graph_node_ref": "skill-agent-graph://skill/intake-budget-driver-context-review",
+  "related_workflows": [
+    "intake.legal_budget_context_review.v1",
+    "intake.missing_information_review.v1"
+  ],
+  "supersedes": [],
+  "superseded_by": null,
+  "combines_with": [
+    "labor-employment-party-role-mapper",
+    "legal-context-bundle-assembler"
+  ],
+  "recommended_update_policy": "auto_propose",
+  "created_at": "2026-06-30T00:00:00Z",
+  "updated_at": "2026-06-30T00:00:00Z",
+  "notes": "Draft candidate metadata. Promotion requires control-plane governance and human review."
+}

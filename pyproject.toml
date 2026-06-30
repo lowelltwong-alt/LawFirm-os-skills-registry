@@ -11,7 +11,7 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=8.0,<10", "jsonschema>=4.0,<5"]
+dev = ["pytest>=8.0,<10", "jsonschema>=4.0,<5", "pyyaml>=6.0,<7"]
 
 [project.scripts]
 lawfirm-os-skills = "lawfirm_os_skills_registry.cli:main"
