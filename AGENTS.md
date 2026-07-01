@@ -82,3 +82,28 @@ Before reporting success, run `python scripts/run_full_pytest.py` in this reposi
 - Skills must not expand authority.
 - Skills must not convert draft institutional knowledge into approved institutional knowledge.
 - Context-discipline failures should affect trust scoring and quarantine/review status.
+
+<!-- BEGIN DIGITAL_ASSET_DIRECTORY_GOVERNANCE -->
+## Digital Asset Directory learning and mail pointer
+
+Central hub: `C:\Users\lowel\OneDrive\Desktop\Git Projects\04_Digital_Assett_Directory`
+Wave: `1`
+Rollout policy: `skill_wrapper_pointer`
+Authority tier: `skill_supply_chain`
+Recommended profiles: `skills-registry, asset-skill-wrapper, python-modular-design`
+
+Before material AI-assisted work:
+1. Read this repository's own front door and authority surfaces first.
+2. Run: `asset-dir agent preflight --repo . --agent <agent> --task "<task>" --hub "C:\Users\lowel\OneDrive\Desktop\Git Projects\04_Digital_Assett_Directory"`
+3. State scope, allowed and forbidden paths, validation plan, and stop conditions.
+4. Preserve this repo's local canon. DAD is advisory evidence and learning transport, not semantic authority.
+
+Before reporting completion or pushing material changes:
+1. Run this repo's required validation.
+2. Run: `asset-dir agent postflight --session <SESSION_ID> --repo . --summary "<summary>" --hub "C:\Users\lowel\OneDrive\Desktop\Git Projects\04_Digital_Assett_Directory"`
+3. Capture lessons, discoveries, failures, reusable patterns, missing capabilities, risks, and unknowns.
+
+DAD mail lives at `.digital-asset/mail/` and is candidate-only inbox/outbox transport. Mail can suggest lessons, workflows, assets, taxonomy, capabilities, or governance notices; local review decides whether anything is adopted. Agent review is triage only, and human review/public-release gates remain separate.
+
+Hooks are not enabled by this Wave 1 install. Do not set `core.hooksPath` or add hook enforcement without separate human approval.
+<!-- END DIGITAL_ASSET_DIRECTORY_GOVERNANCE -->
