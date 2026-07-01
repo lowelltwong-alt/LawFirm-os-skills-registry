@@ -212,6 +212,109 @@
       "full_regression_required": false
     },
     {
+      "test_id": "LawFirm-os-skills-registry.tests.test_governance_dependency_map_mirror.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_governance_dependency_map_mirror.py",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_governance_dependency_map_mirror.py -q",
+      "owning_repo": "LawFirm-os-skills-registry",
+      "owning_plane": "skills_registry",
+      "architecture_surface": [
+        "skills_registry",
+        "repo_local_regression",
+        "governance_boundary"
+      ],
+      "risk_tier": "protected",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "source_code_change",
+        "governance_doc_change"
+      ],
+      "trigger_patterns": [
+        "tests/test_governance_dependency_map_mirror.py",
+        "src/**/*.py"
+      ],
+      "markers": [
+        "pytest",
+        "skills_registry",
+        "protected"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate"
+      ],
+      "downstream_dependencies": [],
+      "must_run_when": [
+        "LawFirm-os-skills-registry tests/test_governance_dependency_map_mirror.py changes",
+        "router selects matching architecture surface"
+      ],
+      "must_not_validate": [
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
+      ],
+      "expected_runtime_seconds": 10,
+      "full_regression_required": false
+    },
+    {
+      "test_id": "LawFirm-os-skills-registry.tests.test_intake_specialist_skill_review.v1",
+      "language": "python",
+      "framework": "pytest",
+      "artifact_type": "pytest_file",
+      "path": "tests/test_intake_specialist_skill_review.py",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_intake_specialist_skill_review.py -q",
+      "owning_repo": "LawFirm-os-skills-registry",
+      "owning_plane": "skills_registry",
+      "architecture_surface": [
+        "skills_registry",
+        "intake_specialist_skill_review",
+        "candidate_only_governance"
+      ],
+      "risk_tier": "protected",
+      "change_classes_covered": [
+        "test_artifact_change",
+        "skill_registry_change",
+        "governance_metadata_change"
+      ],
+      "trigger_patterns": [
+        "registry/proposed-intake-specialist-skills.json",
+        "registry/proposed-draft-skill-index.json",
+        "registry/skill-agent-local-registry.json",
+        "skills/draft/intake-source-grounding-review/**",
+        "skills/draft/labor-employment-party-role-mapper/**",
+        "skills/draft/intake-budget-driver-context-review/**",
+        "skills/draft/carrier-rejection-learning-loop-review/**",
+        "scripts/validate_intake_specialist_skill_review.py",
+        "tests/test_intake_specialist_skill_review.py"
+      ],
+      "markers": [
+        "pytest",
+        "skills_registry",
+        "intake",
+        "draft_candidate",
+        "protected"
+      ],
+      "upstream_dependencies": [
+        "LawFirm-os-semantic-substrate",
+        "LawFirm-os-intake"
+      ],
+      "downstream_dependencies": [
+        "LawFirm-os-legal-knowledge-runtime",
+        "LawFirm-os-orchestrator",
+        "LawFirm-os-exceptions-lake-runtime"
+      ],
+      "must_run_when": [
+        "intake specialist draft skill surfaces change",
+        "skill context discipline metadata changes"
+      ],
+      "must_not_validate": [
+        "skill approval or installation",
+        "canonical lifecycle or promotion authority",
+        "production connector or external write authority"
+      ],
+      "expected_runtime_seconds": 5,
+      "full_regression_required": false
+    },
+    {
       "test_id": "LawFirm-os-skills-registry.tests.test_registry_gap_factory.v1",
       "language": "python",
       "framework": "pytest",
@@ -339,62 +442,49 @@
       "full_regression_required": false
     },
     {
-      "test_id": "LawFirm-os-skills-registry.tests.test_intake_specialist_skill_review.v1",
+      "test_id": "LawFirm-os-skills-registry.tests.test_skill_trust_layer.v1",
       "language": "python",
       "framework": "pytest",
       "artifact_type": "pytest_file",
-      "path": "tests/test_intake_specialist_skill_review.py",
-      "runner_command": "python scripts/run_full_pytest.py tests/test_intake_specialist_skill_review.py -q",
+      "path": "tests/test_skill_trust_layer.py",
+      "runner_command": "python scripts/run_full_pytest.py tests/test_skill_trust_layer.py -q",
       "owning_repo": "LawFirm-os-skills-registry",
       "owning_plane": "skills_registry",
       "architecture_surface": [
         "skills_registry",
-        "intake_specialist_skill_review",
-        "candidate_only_governance"
+        "skill_trust_layer",
+        "semantic_substrate_schema_fixture"
       ],
       "risk_tier": "protected",
       "change_classes_covered": [
         "test_artifact_change",
-        "skill_registry_change",
-        "governance_metadata_change"
+        "skill_trust_change",
+        "cross_repo_schema_fixture_change"
       ],
       "trigger_patterns": [
-        "registry/proposed-intake-specialist-skills.json",
-        "registry/proposed-draft-skill-index.json",
-        "registry/skill-agent-local-registry.json",
-        "skills/draft/intake-source-grounding-review/**",
-        "skills/draft/labor-employment-party-role-mapper/**",
-        "skills/draft/intake-budget-driver-context-review/**",
-        "skills/draft/carrier-rejection-learning-loop-review/**",
-        "scripts/validate_intake_specialist_skill_review.py",
-        "tests/test_intake_specialist_skill_review.py"
+        "tests/test_skill_trust_layer.py",
+        "src/lawfirm_os_skills_registry/domain/**",
+        "src/lawfirm_os_skills_registry/qa/**",
+        "../LawFirm-os-semantic-substrate/schemas/skill-trust-record.schema.json"
       ],
       "markers": [
         "pytest",
         "skills_registry",
-        "intake",
-        "draft_candidate",
+        "skill_trust_layer",
         "protected"
       ],
       "upstream_dependencies": [
-        "LawFirm-os-semantic-substrate",
-        "LawFirm-os-intake"
+        "LawFirm-os-semantic-substrate"
       ],
-      "downstream_dependencies": [
-        "LawFirm-os-legal-knowledge-runtime",
-        "LawFirm-os-orchestrator",
-        "LawFirm-os-exceptions-lake-runtime"
-      ],
+      "downstream_dependencies": [],
       "must_run_when": [
-        "intake specialist draft skill surfaces change",
-        "skill context discipline metadata changes"
+        "skill trust or substrate schema fixture surfaces change"
       ],
       "must_not_validate": [
-        "skill approval or installation",
-        "canonical lifecycle or promotion authority",
-        "production connector or external write authority"
+        "approval without human approval record",
+        "canonical lifecycle promotion authority"
       ],
-      "expected_runtime_seconds": 5,
+      "expected_runtime_seconds": 10,
       "full_regression_required": false
     },
     {
@@ -440,55 +530,11 @@
       ],
       "must_not_validate": [
         "short default pytest timeout as a successful full regression",
-        "direct pytest invocation without the policy marker"
+        "direct pytest invocation without the policy marker",
+        "canonical semantic authority outside Semantic Substrate",
+        "promotion authority without governance decision"
       ],
       "expected_runtime_seconds": 5,
-      "full_regression_required": false
-    },
-    {
-      "test_id": "LawFirm-os-skills-registry.tests.test_skill_trust_layer.v1",
-      "language": "python",
-      "framework": "pytest",
-      "artifact_type": "pytest_file",
-      "path": "tests/test_skill_trust_layer.py",
-      "runner_command": "python scripts/run_full_pytest.py tests/test_skill_trust_layer.py -q",
-      "owning_repo": "LawFirm-os-skills-registry",
-      "owning_plane": "skills_registry",
-      "architecture_surface": [
-        "skills_registry",
-        "skill_trust_layer",
-        "semantic_substrate_schema_fixture"
-      ],
-      "risk_tier": "protected",
-      "change_classes_covered": [
-        "test_artifact_change",
-        "skill_trust_change",
-        "cross_repo_schema_fixture_change"
-      ],
-      "trigger_patterns": [
-        "tests/test_skill_trust_layer.py",
-        "src/lawfirm_os_skills_registry/domain/**",
-        "src/lawfirm_os_skills_registry/qa/**",
-        "../LawFirm-os-semantic-substrate/schemas/skill-trust-record.schema.json"
-      ],
-      "markers": [
-        "pytest",
-        "skills_registry",
-        "skill_trust_layer",
-        "protected"
-      ],
-      "upstream_dependencies": [
-        "LawFirm-os-semantic-substrate"
-      ],
-      "downstream_dependencies": [],
-      "must_run_when": [
-        "skill trust or substrate schema fixture surfaces change"
-      ],
-      "must_not_validate": [
-        "approval without human approval record",
-        "canonical lifecycle promotion authority"
-      ],
-      "expected_runtime_seconds": 10,
       "full_regression_required": false
     }
   ],
