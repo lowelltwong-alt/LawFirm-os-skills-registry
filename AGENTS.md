@@ -82,3 +82,50 @@ Before reporting success, run `python scripts/run_full_pytest.py` in this reposi
 - Skills must not expand authority.
 - Skills must not convert draft institutional knowledge into approved institutional knowledge.
 - Context-discipline failures should affect trust scoring and quarantine/review status.
+
+<!-- BEGIN DIGITAL_ASSET_DIRECTORY_GOVERNANCE -->
+## Digital Asset Directory enrollment contract
+
+Repo enrollment ID: `lawfirm-os-skills-registry`
+Central DAD hub: `dad://hub/Digital-Assett-Directory` resolved by `--hub`, `DAD_HUB`, or
+`~/.dad/hub.json`.
+Contract: `.digital-asset/dad-integration.json`
+
+Before material AI-assisted work, read this repo's front door and run:
+
+```text
+asset-dir agent preflight --repo . --agent <agent-id> --task "<task>"
+```
+
+`<agent-id>` is any arbitrary non-empty string; Claude, Codex, Cursor, Copilot,
+human, CI, and future runtimes are optional adapters over the same DAD contract.
+
+Read the returned `context_pack` before editing. If DAD is unavailable, local
+coding may continue with a logged warning, but cross-repo writes, public
+release, enrollment apply/update, protected repo work, and mail containing
+sensitive payloads fail closed unless a named human bypass is recorded.
+
+Use `.digital-asset/context-map.json` to decide which DAD assets, skills,
+templates, architecture references, governance maps, or data maps are relevant.
+Mail is checked daily by digest; asset, skill, template, architecture,
+governance-map, data-map, and enrollment freshness checks are weekly and should
+surface preflight warnings only when stale.
+
+DAD may write broadly only during `asset-dir enroll apply` or
+`asset-dir enroll update-apply` with a reviewed approval ID. Normal recurring
+DAD operation writes only to `.digital-asset/mail/**`.
+
+Mail, assets, skills, and templates are candidate evidence until reviewed
+locally. This repo keeps local source authority and decides whether to adopt
+any suggestion. Public-facing repos cannot receive private/internal/
+restricted/unknown-origin mail without a DAD human release record.
+
+If work is PR-ready, an actual PR is open, or a branch is intentionally left
+after a work session, record branch/PR status, owner or next reviewer,
+validation refs, next action, and escalation date. Send metadata-only DAD mail
+for stuck, superseded, duplicate, conflict-heavy, or stale PR/branch queues when
+local policy allows.
+
+Close material work with postflight and include the preflight trace ID plus any
+used, ignored, failed, or harmful DAD recommendations.
+<!-- END DIGITAL_ASSET_DIRECTORY_GOVERNANCE -->
